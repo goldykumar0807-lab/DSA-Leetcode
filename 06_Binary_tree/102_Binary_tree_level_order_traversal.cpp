@@ -4,27 +4,21 @@ public:
     if(root==NULL) return 0;
     return 1+max(level(root->left),level(root->right));
     }
-    void nthlevel(TreeNode* root,vector<int> &v,int n){
+    
+    void print(TreeNode* root,vector<vector<int>> &ans,int level){
         if(root==NULL) return;
-        if(n==1){
-            v.push_back(root->val);
-            return;
-        }
-        n--;
-        nthlevel(root->left,v,n);
-        nthlevel(root->right,v,n);
-    }
-    void print(TreeNode* root,vector<vector<int>> &ans){
-        int n=level(root);
-        for(int i=1;i<=n;i++){
-            vector<int> v;
-            nthlevel(root,v,i);
-            ans.push_back(v);
-        }
+        ans[level].push_back(root->val);
+        print(root->left,ans,level+1);
+        print(root->right,ans,level+1);
     }
     vector<vector<int>> levelOrder(TreeNode* root) {
+        int n=level(root);
         vector<vector<int>> ans;
-        print(root,ans);
+        vector<int> v;
+        for(int i=1;i<=n;i++){
+            ans.push_back(v);
+        }
+        print(root,ans,0);
         return ans;
     }
 };
